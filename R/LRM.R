@@ -8,20 +8,19 @@
 #'
 #'@param data an optional data frame, list containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lm_s is called.
 #'
+#'@param alpha a numeric number specifying the alpha-level when calculate CIs of betas (0.5 by default).
+#'Only use when "alpha = TRUE"
+#'
 #'@return The function returns the Coefficients' matrix which contain the value, S.E, t-statistics and p-value of each coefficient. The function also will automatically print summary of coefficients and anova table of the model.
 #'
 #'@examples
-#'y = rnorm(1000)
-#'x = rnorm(1000)
-#'z = rnorm(1000)
-#'LRM(y ~ x)
-#'LRM(y ~ x+z)
+#'LRM(mpg~wt+drat,data=mtcars)
 #'
-#'@import stats
+#'@import statsL
 #'@export
 #'LRM
 
-LRM<-function (formula, data){
+LRM<-function (formula, data, alpha=0.05){
   ## Processing formula input
   mf<-match.call(expand.dots = FALSE)
   m<-match(c("formula", "data"),
@@ -79,10 +78,17 @@ LRM<-function (formula, data){
   R_sqaure <-1-SSE/SSY
   ad_R_square <- 1-(SSE/(n-p))/(SSY/(n-1))
   ## F Statistics
-  F_stat = (SSR/(p-1))/(SSE/(n-p))
-  F_pvalue = 1-pf(F_stat,df1=p-1,df2=n-p)
+  F_stat=(SSR/(p-1))/(SSE/(n-p))
+  F_pvalue=1-pf(F_stat,df1=p-1,df2=n-p)
   ##MSE
   MSE=SSE/(n-p)
+  ## confidence Interval of betahat
+  ## calculate confidence interval of beta-hat (if required)
+
+  t <- qt(p=1-alpha/2, df=(n - p))
+  betahat_CIu<-betahat+t*se_beta_hat
+  betahat_CId <- betahat-t*se_beta_hat
+
   ##output
   coefs_table<-cbind(est_beta = c(betahat),std_error = c(se_beta_hat),t_test=c(T_stat),p_value=c(t_pvalue))
   output<- list(LRM_coefs = coefs_table)
@@ -90,6 +96,8 @@ LRM<-function (formula, data){
   output$R.squared<-R.squared
   F.statistics <- list(value=F_stat, numdf=p-1,dendf=n-p)
   output$F.statistics <- F.statistics
+  CI_table<- cbind(CI_lower=c(betahat_CIu), CI_upper=c(betahat_CId))
+  output$Confidence.Interval<-CI_table
   return(output)
 }
 

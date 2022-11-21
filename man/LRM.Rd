@@ -4,12 +4,15 @@
 \alias{LRM}
 \title{LRM}
 \usage{
-LRM(formula, data)
+LRM(formula, data, alpha = 0.05)
 }
 \arguments{
 \item{formula}{The same object of class "formula" as the origin R function lm(): a symbolic description of the model to be fitted.}
 
 \item{data}{an optional data frame, list containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lm_s is called.}
+
+\item{alpha}{a numeric number specifying the alpha-level when calculate CIs of betas (0.5 by default).
+Only use when "alpha = TRUE"}
 }
 \value{
 The function returns the Coefficients' matrix which contain the value, S.E, t-statistics and p-value of each coefficient. The function also will automatically print summary of coefficients and anova table of the model.
@@ -20,10 +23,6 @@ The function can treat NA with different action.
 The function may not treat interaction terms correctly and cannot fit a model without an intercept properly.
 }
 \examples{
-y = rnorm(1000)
-x = rnorm(1000)
-z = rnorm(1000)
-LRM(y ~ x)
-LRM(y ~ x+z)
+LRM(mpg~wt+drat,data=mtcars)
 
 }
