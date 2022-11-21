@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Flora843/biostat625hw3/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Flora843/biostat625hw3/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Flora843/biostat625hw3/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Flora843/biostat625hw3?branch=main)
 <!-- badges: end -->
 
 The goal of LRM is to …

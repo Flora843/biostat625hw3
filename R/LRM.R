@@ -1,6 +1,5 @@
 
-LRM<-function (formula, data, subset, weights, na.action, method = "qr",
-               model = TRUE, x = FALSE, y = FALSE, qr = TRUE){
+LRM<-function (formula, data){
   ## Processing formula input
   ret.x <- x
   ret.y <- y
@@ -46,7 +45,7 @@ LRM<-function (formula, data, subset, weights, na.action, method = "qr",
   ## F Statistics
   F_stat = (SSR/(p-1))/(SSE/(n-p))
   F.pvalue = 1-pf(F_stat,df1=p-1,df2=n-p)
-  #MSE
+  ##MSE
   MSE=SSE/(n-p)
   ##output
   coefs.table<-cbind(est_beta = c(betahat),std_error = c(se.beta_hat),t.test=c(T_stat),p.value=c(t.pvalue))
@@ -56,5 +55,6 @@ LRM<-function (formula, data, subset, weights, na.action, method = "qr",
   F.statistics <- list(value=F_stat, numdf=p-1,dendf=n-p)
   output$F.statistics <- F.statistics
   return(output)
+
 }
 

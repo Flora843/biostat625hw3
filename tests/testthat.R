@@ -26,3 +26,13 @@ test_that("LRM works", {
   coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$fstatistic[1])
   expect_equal(coefs.actual, coefs.expected)
 })
+test_that("LRM works", {
+  coefs.actual <- as.vector(LRM(mpg~wt+drat,data=mtcars)$R.squared$R.squared)
+  coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$r.squared)
+  expect_equal(coefs.actual, coefs.expected)
+})
+test_that("LRM works", {
+  coefs.actual <- as.vector(LRM(mpg~wt+drat,data=mtcars)$R.squared$Adjusted.R.squared)
+  coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$adj.r.squared)
+  expect_equal(coefs.actual, coefs.expected)
+})
