@@ -1,38 +1,25 @@
 
+
 LRM<-function (formula, data){
   ## Processing formula input
-  ret.x <- x
-  ret.y <- y
-  cl <- match.call()
   mf <- match.call(expand.dots = FALSE)
-  m <- match(c("formula", "data", "subset", "weights", "na.action",
-               "offset"), names(mf), 0L)
+  m <- match(c("formula", "data"), names(mf), 0L)
   mf <- mf[c(1L, m)]
   mf$drop.unused.levels <- TRUE
   mf[[1L]] <- quote(stats::model.frame)
   mf <- eval(mf, parent.frame())
   ## remove incomplete cases
   YX=na.omit(mf)
-  #design matrix
+  ## design matrix
   Y<-YX[,1]
   n<-nrow(YX)
   intercept=rep(1,n)
   if (ncol(YX)==2){
-    X = data.matrix(cbind(rep(1,n),YX[,2]))
+    X = data.matrix(cbind(intercept,YX[,2]))
   }
   else if (ncol(YX)>2){
-    X = data.matrix(cbind(rep(1,n),YX[,2:ncol(YX)]))
+    X = data.matrix(cbind(intercept,YX[,2:ncol(YX)]))
   }
-  a = try(solve(t(X)%*%X),silent=T)
-  if (!is.matrix(a)){
-    print("Design matrix is not invertible. Check for strongly correlated variables.")
-    return(-1)
-  }
-  if(n-p==0){
-    print("Not enough data points for F-stat.")
-    return(-1)
-  }
-  X<-data.matrix(cbind(intercept,YX[,2:ncol(YX)]))
   p<-ncol(X)
   ## beta_hat
   betahat<-solve(t(X) %*% X) %*% t(X) %*% Y
@@ -70,6 +57,7 @@ LRM<-function (formula, data){
   F.statistics <- list(value=F_stat, numdf=p-1,dendf=n-p)
   output$F.statistics <- F.statistics
   return(output)
+
 
 }
 
