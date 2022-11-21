@@ -17,3 +17,32 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(LRM)
 ```
+
+## Introduction
+
+### *(1).What is "LRM"?*
+
+[Linear Regression](https://www.ibm.com/topics/linear-regression) 
+
+### *(2).What can "LRM" package do?*
+
+This R package can calculate some coefficients and carry out some important tests of the existing `stats::lm` function. Besides, this package can calculate the confidence interval of estimated beta
+
+Here are some results that the users can obtain using `LRM` package:
+
+* Fit a linear regression model.
+* Get the point estimates and standard errors of $\hat{\beta}$
+* Obtain the $t$-statistics and the corresponding p value.
+* Get the confidence interval of $\hat{\beta}$
+* Get the $R^2$ and adjusted-$R^2$.
+* Obtain the $F$-statistics
+
+## Installation
+
+* `LRM` can be downloaded from github now
+
+  ```
+  # install.packages("devtools")
+  devtools::install_github("Flora843/biostat625hw3")
+  ```
+
