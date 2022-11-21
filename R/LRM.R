@@ -51,11 +51,11 @@ LRM<-function (formula, data, subset, weights, na.action, method = "qr",
   ##output
   coefs.table<-cbind(est_beta = c(betahat),std_error = c(se.beta_hat),t.test=c(T_stat),p.value=c(t.pvalue))
   output<- list(LRM.coefs = coefs.table)
-  R.squared <- cbind(R.squared = c(R_sqaure), Adjusted.R.squared = c(ad.R_square))
+  R.squared <- list(R.squared = c(R_sqaure), Adjusted.R.squared = c(ad.R_square))
   output$R.squared=R.squared
-  F.statistics <- cbind(F_total = c(F_stat), p_value = c(F.pvalue), df.SSR = p-1,df.SSE=n-p)
+  F.statistics <- list(value=c(F_stat), numdf=p-1,dendf=n-p)
   output$F.statistics <- F.statistics
-  Res_std_error<-cbind(Residual.standard.error=c(MSE),df=n-p)
+  Res_std_error<-list(Residual.standard.error=c(MSE),df=n-p)
   output$Residual.standard.error<-Res_std_error
   return(output)
 }
