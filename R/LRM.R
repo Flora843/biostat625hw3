@@ -17,6 +17,21 @@ LRM<-function (formula, data){
   Y<-YX[,1]
   n<-nrow(YX)
   intercept=rep(1,n)
+  if (ncol(YX)==2){
+    X = data.matrix(cbind(rep(1,n),YX[,2]))
+  }
+  else if (ncol(YX)>2){
+    X = data.matrix(cbind(rep(1,n),YX[,2:ncol(YX)]))
+  }
+  a = try(solve(t(X)%*%X),silent=T)
+  if (!is.matrix(a)){
+    print("Design matrix is not invertible. Check for strongly correlated variables.")
+    return(-1)
+  }
+  if(n-p==0){
+    print("Not enough data points for F-stat.")
+    return(-1)
+  }
   X<-data.matrix(cbind(intercept,YX[,2:ncol(YX)]))
   p<-ncol(X)
   ## beta_hat

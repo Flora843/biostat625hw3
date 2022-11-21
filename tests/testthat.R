@@ -36,3 +36,5 @@ test_that("LRM works", {
   coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$adj.r.squared)
   expect_equal(coefs.actual, coefs.expected)
 })
+
+
