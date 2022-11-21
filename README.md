@@ -4,6 +4,8 @@
 # LRM
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/Flora843/biostat625hw3/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Flora843/biostat625hw3/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of LRM is to …
