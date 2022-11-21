@@ -59,3 +59,4 @@ LRM<-function (formula, data, subset, weights, na.action, method = "qr",
   output$Residual.standard.error<-Res_std_error
   return(output)
 }
+

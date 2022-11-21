@@ -9,4 +9,9 @@
 library(testthat)
 library(LRM)
 
-test_check("LRM")
+test_that("LRM works", {
+  coefs.actual <- as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM.coefs[,1])
+  coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,1])
+  expect_equal(coefs.actual, coefs.expected)
+})
+
