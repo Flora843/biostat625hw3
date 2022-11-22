@@ -25,9 +25,9 @@ LRM<-function (formula, data, alpha=0.05){
   mf<-match.call(expand.dots = FALSE)
   m<-match(c("formula", "data"),
              names(mf), 0L)
-  mf<-mf[c(1L, m)]
+  mf<-mf[c(1, m)]
   mf$drop.unused.levels <- TRUE
-  mf[[1L]] <- quote(stats::model.frame)
+  mf[[1]] <- quote(stats::model.frame)
   mf <- eval(mf, parent.frame())
 
   ## remove incomplete cases
