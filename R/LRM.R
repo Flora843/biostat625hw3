@@ -100,6 +100,7 @@ LRM<-function (formula, data, alpha=0.05){
   ##output
   coefs_table<-cbind(est_beta = c(betahat),std_error = c(se_beta_hat),t_test=c(T_stat),p_value=c(t_pvalue))
   output<- list(LRM_coefs = coefs_table)
+  output$mf=mf
   output$covariance.matrix=cov_matrix
   R.squared <- list(R_squared = R_sqaure, Adjusted.R.squared = ad_R_square)
   output$R.squared<-R.squared
