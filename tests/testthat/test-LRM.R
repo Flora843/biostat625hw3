@@ -1,5 +1,21 @@
 
 test_that("LRM works", {
+  y=1:2
+  x=1:2
+  expect_equal(LRM(y~x), -1)
+  y=1:1000
+  x=1:1000
+  z=1:1000
+  expect_equal(LRM(y~x+z), -1)
+  expect_length(LRM(mpg~wt+drat,data=mtcars), 6)
+  expect_equal((as.vector(LRM(mpg~wt+drat,data=mtcars)$mf[,2])),as.vector(mtcars$wt))
+  y=1:1000
+  x=1:1000
+  z=rnorm(1000)
+  expect_length(LRM(y~z), 2)
+})
+
+test_that("LRM works", {
   coefs.actual <- as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,1])
   coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,1])
   expect_equal(coefs.actual, coefs.expected)
@@ -35,14 +51,4 @@ test_that("LRM works", {
   expect_equal(coefs.actual, coefs.expected)
 })
 
-test_that("LRM works", {
-  y=1:2
-  x=1:2
-  expect_equal(LRM(y~x), -1)
-  y=1:1000
-  x=1:1000
-  z=1:1000
-  expect_equal(LRM(y~x+z), -1)
-  expect_length(LRM(mpg~wt+drat,data=mtcars), 6)
-  expect_equal((as.vector(LRM(mpg~wt+drat,data=mtcars)$mf[,2])),as.vector(mtcars$wt))
-})
+
