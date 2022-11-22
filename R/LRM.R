@@ -17,6 +17,7 @@
 #'LRM(mpg~wt,data=mtcars,alpha=0.05)
 #'
 #'@import statsL
+#'@import bench
 #'@export
 #'LRM
 
