@@ -24,5 +24,6 @@ The function may not treat interaction terms correctly and cannot fit a model wi
 }
 \examples{
 LRM(mpg~wt+drat,data=mtcars)
+LRM(mpg~wt,data=mtcars)
 
 }

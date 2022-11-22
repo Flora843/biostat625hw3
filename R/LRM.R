@@ -15,6 +15,7 @@
 #'
 #'@examples
 #'LRM(mpg~wt+drat,data=mtcars)
+#'LRM(mpg~wt,data=mtcars)
 #'
 #'@import statsL
 #'@export
