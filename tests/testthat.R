@@ -45,3 +45,8 @@ test_that("LRM works", {
   expect_equal(coefs.actual, coefs.expected)
 })
 
+test_that("LRM works",{
+  y=1:2
+  x=1:2
+  expect_equal(LRM(y~x), -1)
+})
