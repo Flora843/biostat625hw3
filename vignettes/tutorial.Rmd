@@ -138,5 +138,11 @@ all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,3]),
         as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,3]))
 all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,4]),
         as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,4]))
+```
+
+## Efficiency
+```{r}
+
 
 ```
+

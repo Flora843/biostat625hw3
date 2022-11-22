@@ -25,9 +25,9 @@ LRM<-function (formula, data, alpha=0.05){
   mf<-match.call(expand.dots = FALSE)
   m<-match(c("formula", "data"),
              names(mf), 0L)
-  mf<-mf[c(1, m)]
+  mf<-mf[c(1L, m)]
   mf$drop.unused.levels <- TRUE
-  mf[[1]] <- quote(stats::model.frame)
+  mf[[1L]] <- quote(stats::model.frame)
   mf <- eval(mf, parent.frame())
 
   ## remove incomplete cases
@@ -50,7 +50,7 @@ LRM<-function (formula, data, alpha=0.05){
   }
   colnames(X)=predictor_name
   ## check if the design matrix is invertible
-  XI=solve(t(X)%*%X)
+  XI=try(solve(t(X)%*%X),silent=T)
   if(!is.matrix(XI)){
     print("The X matrix is invertible, failed to build LRM")
     return(-1)
