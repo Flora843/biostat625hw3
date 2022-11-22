@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(LRM)
-
+library(bench)
 ```
 
 ## Introduction
@@ -142,7 +142,18 @@ all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,4]),
 
 ## Efficiency
 ```{r}
-
-
+efficiency_cpr <-  bench::mark(LRM = {
+  betahat.actual <-LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[, 1]
+  as.vector(betahat.actual)
+}, "lm" = {
+  betahat.expected <-lm(mpg~wt+drat,data=mtcars)$coefficients
+  as.vector(betahat.expected)
+})  
+summary(efficiency_cpr)
+itr.sec <- as.numeric(efficiency_cpr[[4]])
+print(itr.sec)
+total.time<-as.numeric(efficiency_cpr[[9]])
+print(total.time)
 ```
+It was observed that the 'LRM' model is more efficient than 'lm'. 'LRM' has less number of executions performed per second and short total time.
 
