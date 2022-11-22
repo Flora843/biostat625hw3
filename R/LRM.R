@@ -30,7 +30,6 @@ LRM<-function (formula, data, alpha=0.05){
   mf$drop.unused.levels <- TRUE
   mf[[1L]] <- quote(stats::model.frame)
   mf <- eval(mf, parent.frame())
-
   ## remove incomplete cases
   YX=na.omit(mf)
   ## design matrix
@@ -101,6 +100,7 @@ LRM<-function (formula, data, alpha=0.05){
   coefs_table<-cbind(est_beta = c(betahat),std_error = c(se_beta_hat),t_test=c(T_stat),p_value=c(t_pvalue))
   output<- list(LRM_coefs = coefs_table)
   output$Yvector=Y
+  output$Xvector=X
   R.squared <- list(R_squared = R_sqaure, Adjusted.R.squared = ad_R_square)
   output$R.squared<-R.squared
   F.statistics <- list(value=F_stat, numdf=p-1,dendf=n-p)
