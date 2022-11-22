@@ -142,7 +142,7 @@ all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,4]),
 
 ## Efficiency
 ```{r}
-efficiency_cpr <-  bench::mark(LRM = {
+efficiency_cpr <-bench::mark(LRM = {
   betahat.actual <-LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[, 1]
   as.vector(betahat.actual)
 }, "lm" = {

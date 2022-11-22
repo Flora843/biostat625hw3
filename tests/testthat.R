@@ -53,4 +53,5 @@ test_that("LRM works", {
   x=1:1000
   z=1:1000
   expect_equal(LRM(y~x+z), -1)
+  expect_length(LRM(mpg~wt+drat,data=mtcars)$Yvector,32)
 })
