@@ -1,21 +1,20 @@
 #'LRM
 #'
-#'The LRMdev function will fit a linear model using given data set. It will automatically print summary of coefficients and anova table of the model.
+#'The LRM function will fit a linear model using given data set. It will print summary of coefficients and confidence interval table of the model.
 #'The function can treat NA with different action.
-#'The function may not treat interaction terms correctly and cannot fit a model without an intercept properly.
+#'The function may not explore interaction among predictors and it cannot fit a model without an intercept properly.
 #'
-#'@param formula The same object of class "formula" as the origin R function lm(): a symbolic description of the model to be fitted.
+#'@param formula It's similar to "formula" in the origin R function lm(): a symbolic description of the model to be fitted.
 #'
-#'@param data an optional data frame, list containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lm_s is called.
+#'@param data an data frame, containing the both the predictors and outcome variables in the model. If not found in data, the variables are taken from environment, typically the environment from which lm_s is called.
 #'
-#'@param alpha a numeric number specifying the alpha-level when calculate CIs of betas (0.5 by default).
-#'Only use when "alpha = TRUE"
+#'@param alpha a numeric number specifying the significance level to calculate confidence interval of estimated betas (0.05 by default).
 #'
-#'@return The function returns the Coefficients' matrix which contain the value, S.E, t-statistics and p-value of each coefficient. The function also will automatically print summary of coefficients and anova table of the model.
+#'@return The function returns the Coefficients' matrix with the estimated value, Standard error, t-statistics and p-value of each coefficient. It also automatically print the F statistics, R squared and adjusted R squared. Besides, it also returns the variance matrix and confidence interval table.
 #'
 #'@examples
-#'LRM(mpg~wt+drat,data=mtcars)
-#'LRM(mpg~wt,data=mtcars)
+#'LRM(mpg~wt+drat,data=mtcars,alpha=0.01)
+#'LRM(mpg~wt,data=mtcars,alpha=0.05)
 #'
 #'@import statsL
 #'@export
@@ -89,8 +88,10 @@ LRM<-function (formula, data, alpha=0.05){
   F_pvalue=1-pf(F_stat,df1=p-1,df2=n-p)
   ##MSE
   MSE=SSE/(n-p)
-  ## confidence Interval of betahat
-  ## calculate confidence interval of beta-hat (if required)
+  ## variance matrix
+  var_matrix<-as.numeric(sigma_square_hat)*as.matrix(XI)
+
+  ## calculate confidence interval of beta-hat
 
   t <- qt(p=1-alpha/2, df=(n - p))
   betahat_CIu<-betahat+t*se_beta_hat
@@ -99,8 +100,7 @@ LRM<-function (formula, data, alpha=0.05){
   ##output
   coefs_table<-cbind(est_beta = c(betahat),std_error = c(se_beta_hat),t_test=c(T_stat),p_value=c(t_pvalue))
   output<- list(LRM_coefs = coefs_table)
-  output$Yvector=Y
-  output$Xvector=X
+  output$variance.matrix=var_matrix
   R.squared <- list(R_squared = R_sqaure, Adjusted.R.squared = ad_R_square)
   output$R.squared<-R.squared
   F.statistics <- list(value=F_stat, numdf=p-1,dendf=n-p)

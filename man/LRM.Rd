@@ -7,23 +7,22 @@
 LRM(formula, data, alpha = 0.05)
 }
 \arguments{
-\item{formula}{The same object of class "formula" as the origin R function lm(): a symbolic description of the model to be fitted.}
+\item{formula}{It's similar to "formula" in the origin R function lm(): a symbolic description of the model to be fitted.}
 
-\item{data}{an optional data frame, list containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lm_s is called.}
+\item{data}{an data frame, containing the both the predictors and outcome variables in the model. If not found in data, the variables are taken from environment, typically the environment from which lm_s is called.}
 
-\item{alpha}{a numeric number specifying the alpha-level when calculate CIs of betas (0.5 by default).
-Only use when "alpha = TRUE"}
+\item{alpha}{a numeric number specifying the significance level to calculate confidence interval of estimated betas (0.05 by default).}
 }
 \value{
-The function returns the Coefficients' matrix which contain the value, S.E, t-statistics and p-value of each coefficient. The function also will automatically print summary of coefficients and anova table of the model.
+The function returns the Coefficients' matrix with the estimated value, Standard error, t-statistics and p-value of each coefficient. It also automatically print the F statistics, R squared and adjusted R squared. Besides, it also returns the variance matrix and confidence interval table.
 }
 \description{
-The LRMdev function will fit a linear model using given data set. It will automatically print summary of coefficients and anova table of the model.
+The LRM function will fit a linear model using given data set. It will print summary of coefficients and confidence interval table of the model.
 The function can treat NA with different action.
-The function may not treat interaction terms correctly and cannot fit a model without an intercept properly.
+The function may not explore interaction among predictors and it cannot fit a model without an intercept properly.
 }
 \examples{
-LRM(mpg~wt+drat,data=mtcars)
-LRM(mpg~wt,data=mtcars)
+LRM(mpg~wt+drat,data=mtcars,alpha=0.01)
+LRM(mpg~wt,data=mtcars,alpha=0.05)
 
 }
