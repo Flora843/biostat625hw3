@@ -69,9 +69,7 @@ x: explanatory variables(It is likely to fit more than one variables in the mode
 Let's look at some examples:
 
 We will use the `"mtcars"` data
-```{r}
-force(mtcars)
-```
+
 
 *(1) Fit a simple linear regression model:*
 ```{r}
