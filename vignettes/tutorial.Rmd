@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, include=FALSE}
 library(LRM)
-library(car)
+library(bench)
 ```
 
 ## Introduction
@@ -53,7 +53,7 @@ Here are some results that the users can obtain using `LRM` package:
 ## Loading packages
 
 ```
-library(LinearRegression.basic)
+library(LRM)
 ```
 
 ## Details about how to use "LRM"
