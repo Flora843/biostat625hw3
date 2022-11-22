@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 
 ```{r setup, include=FALSE}
 library(LRM)
-library(bench)
 library(car)
 ```
 
