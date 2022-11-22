@@ -31,7 +31,7 @@ Linear regression is a linear method for modelling the relationship between a re
 
 ### *(2).What can "LRM" package do?*
 
-This R package can calculate some coefficients and carry out some important tests of the existing `stats::lm` function. Besides, this package can calculate the confidence interval of estimated beta
+This R package can calculate some coefficients and carry out some important tests of the existing `stats::lm` function. Besides, this package can calculate the confidence interval of estimated beta. However, it can't fit a model without an intercept properly. 
 
 Here are some results that the users can obtain using `LRM` package:
 

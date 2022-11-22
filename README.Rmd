@@ -20,7 +20,23 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/Flora843/biostat625hw3/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Flora843/biostat625hw3?branch=main)
 <!-- badges: end -->
 
-The goal of LRM is to ...
+
+## Introduction
+
+### *What is "LRM"?*
+
+This R package helps users to fit a linear regression model. It calculate some coefficients and carry out some important tests of the existing `stats::lm` function. Besides, it can calculate the confidence interval of estimated beta. However, it can't fit a model without an intercept properly. 
+
+### *What users can obtain with "LRM"?*
+
+Here are some results that the users can obtain using `LRM` package:
+
+* Get the point estimates and standard errors of $\hat{\beta}$
+* Obtain the $t$-statistics and the corresponding p value.
+* Get the confidence interval of $\hat{\beta}$
+* Get the $R^2$ and adjusted-$R^2$.
+* Obtain the $F$-statistics
+
 
 ## Installation
 
@@ -31,27 +47,20 @@ You can install the development version of LRM from [GitHub](https://github.com/
 devtools::install_github("Flora843/biostat625hw3")
 ```
 
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(LRM)
-## basic example code
+LRM(mpg~wt+drat,data=mtcars)$LRM_coefs
+LRM(mpg~wt+drat,data=mtcars)$F.statistics
+LRM(mpg~wt+drat,data=mtcars)$R.squared
+LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
-```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
 
-You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
