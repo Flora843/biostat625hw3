@@ -16,13 +16,18 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(LRM)
+library(bench)
 ```
 
 ## Introduction
 
 ### *(1).What is "LRM"?*
 
+This is a function that help users to fit a linear regression model
+
 [Linear Regression](https://www.ibm.com/topics/linear-regression) 
+
+Linear regression is a linear method for modelling the relationship between a response variable and one or multiple explanatory variables. It is applied for predicting, forecasting or evaluating the strength of the relationship between the response and the explanatory variables.
 
 ### *(2).What can "LRM" package do?*
 
@@ -30,7 +35,6 @@ This R package can calculate some coefficients and carry out some important test
 
 Here are some results that the users can obtain using `LRM` package:
 
-* Fit a linear regression model.
 * Get the point estimates and standard errors of $\hat{\beta}$
 * Obtain the $t$-statistics and the corresponding p value.
 * Get the confidence interval of $\hat{\beta}$
@@ -39,10 +43,100 @@ Here are some results that the users can obtain using `LRM` package:
 
 ## Installation
 
-* `LRM` can be downloaded from github now
+* Please download `LRM` from github
 
   ```
   # install.packages("devtools")
   devtools::install_github("Flora843/biostat625hw3")
   ```
+  
+## Loading packages
 
+```
+library(LinearRegression.basic)
+```
+
+## Details about how to use "LRM"
+  
+* **formula**: y ~ x  
+y: response variable
+x: explanatory variables(It is likely to fit more than one variables in the mode)
+
+* **data** : A numerical data 
+
+* **alpha** : significance value(default=0.05)
+
+Let's look at some examples:
+
+We will use the `"mtcars"` data
+```{r}
+force(mtcars)
+```
+
+*(1) Fit a simple linear regression model:*
+```{r}
+SLR=LRM(mpg~wt,data=mtcars,alpha=0.05)
+#To obtain coefficient table 
+print(SLR$LRM_coefs)
+#To obtain R.squared and Adjusted R.squared
+print(SLR$R.squared)
+# To obtain F statistics 
+print(SLR$F.statistics)
+# To obtain confidence interval
+print(SLR$Confidence.Interval)
+```
+
+*(2) Fit a multiple linear regression model:*
+```{r}
+MLR=LRM(mpg~wt+drat+hp,data=mtcars,alpha=0.02)
+#To obtain coefficient table 
+print(MLR$LRM_coefs)
+#To obtain R.squared and Adjusted R.squared
+print(MLR$R.squared)
+# To obtain F statistics 
+print(MLR$F.statistics)
+# To obtain confidence interval
+print(MLR$Confidence.Interval)
+```
+```
+## Correctness
+
+**(1) Compare the point estimate and standard error of $\hat{\beta}$ **
+```{r}
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,1]),
+         as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,1]))
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,2]),
+         as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,2]))
+```
+
+**(2)Compare Confidence interval**
+```{r}
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval[1,1]),
+         as.vector(confint(lm(mpg~wt+drat,data=mtcars))[1,1]))
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval[1,2]),
+         as.vector(confint(lm(mpg~wt+drat,data=mtcars))[1,2]))
+```
+
+**(3)Compare adjusted R Squared **
+```{r}
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$R.squared$Adjusted.R.squared),
+          as.vector(summary(lm(mpg~wt+drat,data=mtcars))$adj.r.squared))
+```
+
+**(4)Compare F statistics **
+
+```{r}
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$F.statistics$value),
+          as.vector(summary(lm(mpg~wt+drat,data=mtcars))$fstatistic[1]))
+
+```
+
+**(4)Compare t statistics and p value **
+
+```{r}
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,3]),
+        as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,3]))
+all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,4]),
+        as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,4]))
+
+```

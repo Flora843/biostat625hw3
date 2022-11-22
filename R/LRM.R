@@ -29,6 +29,7 @@ LRM<-function (formula, data, alpha=0.05){
   mf$drop.unused.levels <- TRUE
   mf[[1L]] <- quote(stats::model.frame)
   mf <- eval(mf, parent.frame())
+
   ## remove incomplete cases
   YX=na.omit(mf)
   ## design matrix
@@ -42,8 +43,14 @@ LRM<-function (formula, data, alpha=0.05){
     X=data.matrix(cbind(intercept,YX[,2:ncol(YX)]))
   }
   p<-ncol(X)
+  predictor_name <- rep("0", p)
+  predictor_name[1]= "intercept"
+  for (i in 2:p) {
+    predictor_name[i]=c(paste0("predictor_", i-1, collapse = ""))
+  }
+  colnames(X)=predictor_name
   ## check if the design matrix is invertible
-  XI=try(solve(t(X)%*%X),silent=T)
+  XI=solve(t(X)%*%X)
   if(!is.matrix(XI)){
     print("The X matrix is invertible, failed to build LRM")
     return(-1)
@@ -87,7 +94,7 @@ LRM<-function (formula, data, alpha=0.05){
 
   t <- qt(p=1-alpha/2, df=(n - p))
   betahat_CIu<-betahat+t*se_beta_hat
-  betahat_CId <- betahat-t*se_beta_hat
+  betahat_CId<-betahat-t*se_beta_hat
 
   ##output
   coefs_table<-cbind(est_beta = c(betahat),std_error = c(se_beta_hat),t_test=c(T_stat),p_value=c(t_pvalue))
@@ -96,7 +103,7 @@ LRM<-function (formula, data, alpha=0.05){
   output$R.squared<-R.squared
   F.statistics <- list(value=F_stat, numdf=p-1,dendf=n-p)
   output$F.statistics <- F.statistics
-  CI_table<- cbind(CI_lower=c(betahat_CIu), CI_upper=c(betahat_CId))
+  CI_table<- cbind(CI_lower=c(betahat_CId), CI_upper=c(betahat_CIu))
   output$Confidence.Interval<-CI_table
   return(output)
 }

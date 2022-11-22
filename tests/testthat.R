@@ -36,5 +36,12 @@ test_that("LRM works", {
   coefs.expected <- as.vector(summary(lm(mpg~wt+drat,data=mtcars))$adj.r.squared)
   expect_equal(coefs.actual, coefs.expected)
 })
-
+test_that("LRM works", {
+  coefs.actual<-as.vector(LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval[1,1])
+  coefs.expected<-as.vector(confint(lm(mpg~wt+drat,data=mtcars))[1,1])
+  expect_equal(coefs.actual, coefs.expected)
+  coefs.actual<-as.vector(LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval[1,2])
+  coefs.expected<-as.vector(confint(lm(mpg~wt+drat,data=mtcars))[1,2])
+  expect_equal(coefs.actual, coefs.expected)
+})
 
