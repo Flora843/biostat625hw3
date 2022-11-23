@@ -15,10 +15,11 @@ coverage](https://codecov.io/gh/Flora843/biostat625hw3/branch/main/graph/badge.s
 ### *What is “LRM”?*
 
 This R package helps users to fit a linear regression model. It
-calculate some coefficients and carry out some important tests of the
+calculate coefficients and carry out some important tests of the
 existing `stats::lm` function. Besides, it can calculate the confidence
-interval of estimated beta. However, it can’t fit a model without an
-intercept properly.
+interval of estimated beta and obtain the covariance matrix. However, it
+can’t fit a model without an intercept properly. It can’t explore the
+interaction between predictors.
 
 ### *What users can obtain with “LRM”?*
 
@@ -29,6 +30,7 @@ Here are some results that the users can obtain using `LRM` package:
 -   Get the confidence interval of $\hat{\beta}$
 -   Get the $R^2$ and adjusted-$R^2$.
 -   Obtain the $F$-statistics
+-   Get covariance matrix of estimated coefficients
 
 ## Installation
 
@@ -42,15 +44,15 @@ devtools::install_github("Flora843/biostat625hw3")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is an example：
 
 ``` r
 library(LRM)
 LRM(mpg~wt+drat,data=mtcars)$LRM_coefs
-#>              est_beta std_error     t_test      p_value
-#> intercept   30.290370 7.3178783  4.1392285 2.477121e-04
-#> predictor_1 -4.782890 0.7970353 -6.0008515 1.224127e-06
-#> predictor_2  1.442491 1.4585676  0.9889776 3.303310e-01
+#>            est_beta std_error     t_test      p_value
+#> intercept 30.290370 7.3178783  4.1392285 2.477121e-04
+#> wt        -4.782890 0.7970353 -6.0008515 1.224127e-06
+#> drat       1.442491 1.4585676  0.9889776 3.303310e-01
 LRM(mpg~wt+drat,data=mtcars)$F.statistics
 #> $value
 #>          [,1]
@@ -74,4 +76,9 @@ LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval
 #> [1,] 15.323629 45.257112
 #> [2,] -6.413010 -3.152770
 #> [3,] -1.540615  4.425596
+LRM(mpg~wt+drat,data=mtcars)$covariance.matrix
+#>           intercept         wt        drat
+#> intercept  53.55134 -5.0226005 -10.3160312
+#> wt         -5.02260  0.6352652   0.8282335
+#> drat      -10.31603  0.8282335   2.1274195
 ```

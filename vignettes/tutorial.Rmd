@@ -31,15 +31,17 @@ Linear regression is a linear method for modelling the relationship between a re
 
 ### *(2).What can "LRM" package do?*
 
-This R package can calculate some coefficients and carry out some important tests of the existing `stats::lm` function. Besides, this package can calculate the confidence interval of estimated beta. However, it can't fit a model without an intercept properly. 
+This R package can calculate some coefficients and carry out some important tests of the existing `stats::lm` function. However, it can't fit a model without an intercept properly. It can't explore the interaction between predictors. 
 
 Here are some results that the users can obtain using `LRM` package:
 
-* Get the point estimates and standard errors of $\hat{\beta}$
-* Obtain the $t$-statistics and the corresponding p value.
-* Get the confidence interval of $\hat{\beta}$
-* Get the $R^2$ and adjusted-$R^2$.
-* Obtain the $F$-statistics
+* Get the point estimates and standard errors of estimated coefficients
+* Obtain T statistics and the corresponding p value.
+* Get the confidence interval of estimated coefficients
+* Get the R squared and adjusted R squared value
+* Obtain  F statistics
+* Get covariance matrix of estimated coefficients
+
 
 ## Installation
 
@@ -60,16 +62,15 @@ library(LRM)
   
 * **formula**: y ~ x  
 y: response variable
-x: explanatory variables(It is likely to fit more than one variables in the mode)
+x: explanatory variables (It is likely to fit more than one variables)
 
-* **data** : A numerical data 
+* **data** : A numerical data frame
 
 * **alpha** : significance value(default=0.05)
 
 Let's look at some examples:
 
 We will use the `"mtcars"` data
-
 
 *(1) Fit a simple linear regression model:*
 ```{r}
@@ -82,6 +83,8 @@ print(SLR$R.squared)
 print(SLR$F.statistics)
 # To obtain confidence interval
 print(SLR$Confidence.Interval)
+# To obtain covariance matrix
+print(SLR$covariance.matrix)
 ```
 
 *(2) Fit a multiple linear regression model:*
@@ -95,6 +98,8 @@ print(MLR$R.squared)
 print(MLR$F.statistics)
 # To obtain confidence interval
 print(MLR$Confidence.Interval)
+# To obtain covariance interval
+print(MLR$covariance.matrix)
 ```
 ```
 ## Correctness
@@ -138,12 +143,16 @@ all.equal(as.vector(LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[,4]),
         as.vector(summary(lm(mpg~wt+drat,data=mtcars))$coefficients[,4]))
 ```
 
+**(5)Compare t statistics and p value **
+There is no function that could directly calculate covariance of estimated coefficients.
+
+
 ## Efficiency
 ```{r}
 efficiency_cpr <-bench::mark(LRM = {
   betahat.actual <-LRM(mpg~wt+drat,data=mtcars)$LRM_coefs[, 1]
   as.vector(betahat.actual)
-}, "lm" = {
+}, lm_summary = {
   betahat.expected <-lm(mpg~wt+drat,data=mtcars)$coefficients
   as.vector(betahat.expected)
 })  
@@ -153,5 +162,5 @@ print(itr.sec)
 total.time<-as.numeric(efficiency_cpr[[9]])
 print(total.time)
 ```
-It was observed that the 'LRM' model is more efficient than 'lm'. 'LRM' has less number of executions performed per second and short total time.
+It was observed that the 'LRM' model is more efficient than 'lm'. 'LRM' has less number of executions performed per second and shorter total time.
 

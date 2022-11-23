@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 ### *What is "LRM"?*
 
-This R package helps users to fit a linear regression model. It calculate some coefficients and carry out some important tests of the existing `stats::lm` function. Besides, it can calculate the confidence interval of estimated beta. However, it can't fit a model without an intercept properly. 
+This R package helps users to fit a linear regression model. It calculate coefficients and carry out some important tests of the existing `stats::lm` function. Besides, it can calculate the confidence interval of estimated beta and obtain the covariance matrix. However, it can't fit a model without an intercept properly. It can't explore the interaction between predictors. 
 
 ### *What users can obtain with "LRM"?*
 
@@ -36,6 +36,7 @@ Here are some results that the users can obtain using `LRM` package:
 * Get the confidence interval of $\hat{\beta}$
 * Get the $R^2$ and adjusted-$R^2$.
 * Obtain the $F$-statistics
+* Get covariance matrix of estimated coefficients
 
 
 ## Installation
@@ -50,7 +51,7 @@ devtools::install_github("Flora843/biostat625hw3")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is an example：
 
 ```{r example}
 library(LRM)
@@ -58,6 +59,7 @@ LRM(mpg~wt+drat,data=mtcars)$LRM_coefs
 LRM(mpg~wt+drat,data=mtcars)$F.statistics
 LRM(mpg~wt+drat,data=mtcars)$R.squared
 LRM(mpg~wt+drat,data=mtcars)$Confidence.Interval
+LRM(mpg~wt+drat,data=mtcars)$covariance.matrix
 ```
 
 
