@@ -9,10 +9,6 @@ test_that("LRM works", {
   expect_equal(LRM(y~x+z), -1)
   expect_length(LRM(mpg~wt+drat,data=mtcars), 6)
   expect_equal((as.vector(LRM(mpg~wt+drat,data=mtcars)$mf[,2])),as.vector(mtcars$wt))
-  y=1:1000
-  x=1:1000
-  z=rnorm(1000)
-  expect_length(LRM(y~z), 2)
 })
 
 test_that("LRM works", {

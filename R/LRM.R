@@ -35,12 +35,8 @@ LRM<-function (formula, data, alpha=0.05){
   Y<-YX[,1]
   n<-nrow(YX)
   intercept=rep(1,n)
-  if (ncol(YX)==2){
-    X=data.matrix(cbind(intercept,YX[,2]))
-  }
-  else if (ncol(YX)>2){
-    X=data.matrix(cbind(intercept,YX[,2:ncol(YX)]))
-  }
+  X=data.matrix(cbind(intercept,YX[,2:ncol(YX)]))
+
   p<-ncol(X)
   predictor_name <- rep("0", p)
   predictor_name[1]= "intercept"
