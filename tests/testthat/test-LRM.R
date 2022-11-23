@@ -3,12 +3,11 @@ test_that("LRM works", {
   y=1:2
   x=1:2
   expect_equal(LRM(y~x), -1)
-  y=1:1000
-  x=1:1000
-  z=1:1000
+  y=1:100
+  x=1:100
+  z=1:100
   expect_equal(LRM(y~x+z), -1)
-  expect_length(LRM(mpg~wt+drat,data=mtcars), 6)
-  expect_equal((as.vector(LRM(mpg~wt+drat,data=mtcars)$mf[,2])),as.vector(mtcars$wt))
+  expect_length(LRM(mpg~wt+drat,data=mtcars), 5)
 })
 
 test_that("LRM works", {

@@ -7,19 +7,19 @@
 LRM(formula, data, alpha = 0.05)
 }
 \arguments{
-\item{formula}{It's similar to "formula" in the origin R function lm(): a symbolic description of the model to be fitted.}
+\item{formula}{It's similar to "formula" in the R function lm(): a symbolic description of the model to be fitted.}
 
-\item{data}{an data frame, containing the both the predictors and outcome variables in the model. If not found in data, the variables are taken from environment, typically the environment from which lm_s is called.}
+\item{data}{A data frame, containing both the predictors of interests and outcome variables.}
 
-\item{alpha}{a numeric number specifying the significance level to calculate confidence interval of estimated betas (0.05 by default).}
+\item{alpha}{A number represents the significance level, used to calculate confidence interval of estimated parameters (alpha=0.05 by default).}
 }
 \value{
-The function returns the Coefficients' matrix with the estimated value, Standard error, t-statistics and p-value of each coefficient. It also automatically print the F statistics, R squared and adjusted R squared. Besides, it also returns the variance matrix and confidence interval table.
+The function returns the Coefficients' matrix with the estimated value, Standard error, t-statistics and p-value of each coefficient. It also automatically print the F statistics, R squared and adjusted R squared. Besides, it also returns the covariance matrix and confidence interval table
 }
 \description{
-The LRM function will fit a linear model using given data set. It will print summary of coefficients and confidence interval table of the model.
-The function can treat NA with different action.
-The function may not explore interaction among predictors and it cannot fit a model without an intercept properly.
+The LRM function will fit a linear regression model based on given data set. It shows the summary of coefficients, confidence interval and covariance table of estimated parameters of the model.
+The function may not explore interaction between predictors and it cannot fit a model without an intercept properly.
+The function can fit data with NA values.
 }
 \examples{
 LRM(mpg~wt+drat,data=mtcars,alpha=0.01)

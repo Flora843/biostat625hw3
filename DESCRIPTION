@@ -1,11 +1,10 @@
 Package: LRM
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Linear Regression Model
 Version: 0.1.0
 Author: Ye Yao
 Maintainer: Ye Yao <yaoye@umich.edu>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Help users fit linear regression models, calculating coefficients and carrying out hypothesis tests.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
